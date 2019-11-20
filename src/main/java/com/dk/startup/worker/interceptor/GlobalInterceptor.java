@@ -19,8 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -184,13 +182,10 @@ public class GlobalInterceptor implements MethodInterceptor, ApplicationListener
             req.setUserId(userId);
             req.setRoleName(hasRole.roleName());
 
-            AccountSvc accountSvc;
-            try {
-                accountSvc = SpringContextHolder.getBean(AccountSvc.class);
+            if( accountSvc!=null ){
                 Boolean result = accountSvc.ifUserHasRole(userId,hasRole.roleName());
                 return result ? ALLOWED : NOT_ALLOWED;
-            }
-            catch (Exception e) {
+            } else {
                 try {
                     StandResponse<Boolean> result = accountSvcClient.ifUserHasRole(req);
                     return result.getSuccess() && result.getData() ? ALLOWED : NOT_ALLOWED;
