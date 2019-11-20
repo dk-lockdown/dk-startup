@@ -317,7 +317,7 @@ public class GlobalInterceptor implements MethodInterceptor, ApplicationListener
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            log.error(ex.getMessage(),ex);
+            log.warn("there is no bean named accountSvc");
         }
     }
 
