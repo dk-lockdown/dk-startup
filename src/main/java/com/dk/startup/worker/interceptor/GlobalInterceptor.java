@@ -311,9 +311,7 @@ public class GlobalInterceptor implements MethodInterceptor, ApplicationListener
             accountSvc = SpringContextHolder.getBean(AccountSvc.class);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
             log.warn("there is no bean named accountSvc");
         }
     }
-
 }
