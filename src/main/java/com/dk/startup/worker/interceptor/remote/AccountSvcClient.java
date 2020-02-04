@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author scott lewis
  */
-@FeignClient(name = "per-ope-svc", url = "${dk.account.svc.host}", path = "sso")
+@FeignClient(name = "per-ope-svc", url = "${dk.account.svc.host}")
 public interface AccountSvcClient {
     @RequestMapping(value = "/v1/account/tokenExtract", method = RequestMethod.GET)
     @ResponseBody StandResponse<TokenExtractResult> tokenExtract();
