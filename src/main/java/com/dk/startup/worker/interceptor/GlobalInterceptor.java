@@ -151,6 +151,8 @@ public class GlobalInterceptor implements MethodInterceptor, ApplicationListener
                 return StandResponseBuilder.result(HttpStatus.UNAUTHORIZED.value(), "您的用户凭证已过期，请重新登录");
             } else if(result.getCode()==-1){
                 return StandResponseBuilder.result(HttpStatus.INTERNAL_SERVER_ERROR.value(), "校验用户token失败");
+            } else if(result.getCode()==-2) {
+                return StandResponseBuilder.result(HttpStatus.UNAUTHORIZED.value(), "用户已其他地方登录，若非本人操作，建议您修改密码");
             }
             return null;
         } else {
@@ -164,6 +166,8 @@ public class GlobalInterceptor implements MethodInterceptor, ApplicationListener
                     log.info("设置操作用户的id为{},用户名为{}",result.getData().getUserId(),result.getData().getUserName());
                 } else if (result.getData().getCode()==0) {
                     return StandResponseBuilder.result(HttpStatus.UNAUTHORIZED.value(), "您的用户凭证已过期，请重新登录");
+                } else if(result.getData().getCode()==-2){
+                    return StandResponseBuilder.result(HttpStatus.UNAUTHORIZED.value(), "用户已其他地方登录，若非本人操作，建议您修改密码");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
